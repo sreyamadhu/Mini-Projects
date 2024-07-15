@@ -1,0 +1,38 @@
+{% extends 'blank_layout.html'%} 
+
+{%load static%}
+{% block content %}
+
+{% for movie_obj in recent_movies %}
+       <p> {{movie_obj.title|upper}} </p>
+{% endfor %}
+
+
+<h1>LIST OF MOVIES {{ visits }} time visited</h1>
+<table>
+       <tr><th>TITLE</th><th>DESCRIPTION</th><th>YEAR</th><th>ACTORS</th><th>edit/del</th></tr>
+{% for movie_obj in movies %}
+<tr>
+       <td><h1>{{movie_obj.title|upper}}</h1></td>
+       <td><p>{{movie_obj.description|default:'data not available'}}</p></td>
+       <td><h4>{{movie_obj.year}}</h4></td>
+       
+       <td>
+              {% for actor in movie_obj.acters.all %}
+                  {{ actor.name }}{% if not forloop.last %}, {% endif %}
+              {% endfor %}
+          </td>
+
+       <td><a href="{% url 'edit' movie_obj.id %}">edit</a>/<a href="{% url 'delete' movie_obj.id %}">del</a></td>
+       <td>
+              {% if movie_obj.poster %}
+                     <img src="{{ movie_obj.poster.url }}" alt="{{ movie_obj.title }} poster"  style="width: 200px; ">
+              {% else %}
+                     <p>No poster available</p>
+              {% endif %}
+       </td>
+</tr>
+{% endfor %}
+
+</table>
+{% endblock  %}

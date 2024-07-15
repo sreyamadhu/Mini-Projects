@@ -1,0 +1,9 @@
+{% include 'menu.html' %}
+<h1>CREATE </h1>
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ frm.as_p}}
+    
+    <button type="submit">create</button>
+</form>
